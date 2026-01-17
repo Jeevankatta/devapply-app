@@ -12,5 +12,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  preview: {
+    allowedHosts: [
+      "devapply-frontend.onrender.com"
+    ]
   }
 })
