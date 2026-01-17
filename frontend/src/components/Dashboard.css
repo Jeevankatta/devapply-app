@@ -1,0 +1,230 @@
+.dashboard {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+  color: #333;
+  margin: 0;
+}
+
+.stats-section,
+.scheduler-section,
+.jobs-section {
+  background: #f8f9ff;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.stats-section h3,
+.scheduler-section h3,
+.jobs-section h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.scheduler-info {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.scheduler-status {
+  margin-bottom: 20px;
+}
+
+.status-indicator {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.status-indicator.running {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-indicator.stopped {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.scheduler-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.scheduler-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-stop {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-stop:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.btn-start {
+  background: #28a745;
+  color: white;
+}
+
+.btn-start:hover:not(:disabled) {
+  background: #218838;
+}
+
+.btn-run-now {
+  background: #667eea;
+  color: white;
+}
+
+.btn-run-now:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+.scheduler-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.jobs-list {
+  display: grid;
+  gap: 15px;
+}
+
+.job-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
+}
+
+.job-header h4 {
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.job-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.job-status.saved {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.job-details {
+  margin-bottom: 15px;
+}
+
+.job-details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.job-link {
+  display: inline-block;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.job-link:hover {
+  color: #5568d3;
+}
+
+.no-jobs {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.no-jobs p {
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .scheduler-actions {
+    flex-direction: column;
+  }
+  
+  .scheduler-actions button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,88 @@
+
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: devapply-frontend
+    image: devapply-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - devapply-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devapply-backend
+    image: devapply-backend:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - SMTP_USER=${SMTP_USER:-your@gmail.com}
+      - SMTP_PASS=${SMTP_PASS:-your_app_password}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./test.db}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./uploads:/app/uploads
+      - ./app:/app/app  # For development hot-reload (remove in production)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - devapply-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Database service (if needed)
+  # db:
+  #   image: postgres:15-alpine
+  #   container_name: devapply-db
+  #   environment:
+  #     POSTGRES_USER: ${DB_USER:-devapply}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password}
+  #     POSTGRES_DB: ${DB_NAME:-devapply_db}
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - devapply-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-devapply}"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  # db_data:
+  uploads:
+
+networks:
+  devapply-network:
+    driver: bridge
