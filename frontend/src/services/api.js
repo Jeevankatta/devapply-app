@@ -1,10 +1,15 @@
 import axios from 'axios'
 
 // Auto-detect API URL based on environment
-const API_BASE_URL = import.meta.env.VITE_API_URL || 
-  (typeof window !== 'undefined' && window.location.origin.includes('localhost')) 
-    ? 'http://localhost:8000'
-    : window.location.origin.replace(/:\d+/, '').replace(/frontend/, 'backend')
+let API_BASE_URL = 'http://localhost:8000' // default fallback
+
+if (import.meta.env.VITE_API_URL) {
+  // Use environment variable if set (production)
+  API_BASE_URL = import.meta.env.VITE_API_URL
+} else if (typeof window !== 'undefined' && !window.location.origin.includes('localhost')) {
+  // If running in production without env var, try to construct backend URL
+  API_BASE_URL = window.location.origin.replace('frontend', 'backend')
+}
 
 const api = axios.create({
   baseURL: API_BASE_URL,
